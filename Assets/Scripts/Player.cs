@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public SpriteRenderer playerGraphic;
     public GameObject arrowObject;
     public float power;
 
     private Rigidbody2D playerRb;
+    private Vector3 checkpointPos;
 
     private void Awake()
     {
@@ -17,7 +19,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        checkpointPos = transform.position;
     }
 
     // Update is called once per frame
@@ -25,6 +27,7 @@ public class Player : MonoBehaviour
     {
         UpdateAngle();
         InputPlayer();
+        CheckPlayerFacing();
     }
 
     private void InputPlayer()
@@ -55,8 +58,35 @@ public class Player : MonoBehaviour
         playerRb.AddForce(direction * power);
     }
 
-    private void ChargePower()
+    private void CheckPlayerFacing()
     {
+        if (playerRb.velocity.x < 0)
+        {
+            playerGraphic.flipX = true;
+        }
+        else if (playerRb.velocity.x > 0)
+        {
+            playerGraphic.flipX = false;
+        }
+    }
 
+    private void ResetPosToCheckpoint()
+    {
+        playerRb.velocity = Vector3.zero;
+        transform.position = checkpointPos;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Checkpoint")
+        {
+            checkpointPos = collision.gameObject.transform.position;
+            collision.gameObject.SetActive(false);
+        }
+
+        if (collision.tag == "Lose")
+        {
+            ResetPosToCheckpoint();
+        }
     }
 }
