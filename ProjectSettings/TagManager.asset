@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Checkpoint
   - Lose
+  - Win
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Background
   - Ground
   - Player
-  - 
+  - Checkpoint
   - 
   - 
   - 
@@ -48,6 +49,9 @@ TagManager:
     locked: 0
   - name: Ground
     uniqueID: 2746592509
+    locked: 0
+  - name: Checkpoint
+    uniqueID: 2804773335
     locked: 0
   - name: Background
     uniqueID: 1991717471
